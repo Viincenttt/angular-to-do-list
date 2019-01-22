@@ -45,22 +45,29 @@ namespace TodoList.Api.Services {
             }
 
             ApplicationUser user = await this._userManager.FindByNameAsync(loginRequest.Username);
+            string token = this.GenerateToken(user);
+
+            return new UserLoginResponseModel() {
+                Succeeded = true,
+                Token = token
+            };
+        }
+
+        private string GenerateToken(ApplicationUser user) {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(this._configuration.GetSection("AppSettings:Token").Value);
             var tokenDescriptor = new SecurityTokenDescriptor {
                 Subject = new ClaimsIdentity(new Claim[] {
-                    new Claim(ClaimTypes.Name, user.Id)
+                    new Claim(ClaimTypes.NameIdentifier, user.Id),
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Email, user.Email)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-            string token = tokenHandler.WriteToken(securityToken);
-            return new UserLoginResponseModel() {
-                Succeeded = true,
-                Token = token
-            };
+            return tokenHandler.WriteToken(securityToken);
         }
 
         private async Task<bool> AreCredentialsValid(UserLoginRequestModel loginRequest) {
