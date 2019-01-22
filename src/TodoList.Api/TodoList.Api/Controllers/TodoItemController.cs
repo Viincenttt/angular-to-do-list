@@ -22,6 +22,7 @@ namespace TodoList.Api.Controllers {
         }
 
         [HttpGet]
+        [Route("")]
         public IActionResult GetAll() {
             IList<TodoItemResponse> response = this._todoItemRepository.GetAll()
                 .ProjectTo<TodoItemResponse>(this._mapper.ConfigurationProvider)
@@ -31,7 +32,7 @@ namespace TodoList.Api.Controllers {
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id}", Name = "GetTodoItem")]
         public IActionResult Get(int id) {
             TodoItem todoItem = this._todoItemRepository.GetById(id);
             if (todoItem == null) {
@@ -40,6 +41,40 @@ namespace TodoList.Api.Controllers {
 
             TodoItemResponse response = this._mapper.Map<TodoItemResponse>(todoItem);
             return this.Ok(response);
+        }
+
+        [HttpPost]
+        [Route("")]
+        public IActionResult Add([FromBody]TodoItemResponse response) {
+            if (!this.ModelState.IsValid) {
+                return this.BadRequest(this.ModelState);
+            }
+
+            TodoItem todoItem = this._mapper.Map<TodoItem>(response);
+            todoItem.ApplicationUserId = this.GetUserId();
+
+            this._todoItemRepository.Add(todoItem);
+            this._todoItemRepository.SaveChanges();
+
+            return this.CreatedAtRoute("GetTodoItem", new { id = todoItem.Id }, this._mapper.Map<TodoItemResponse>(todoItem));
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult Update(int id, [FromBody]TodoItemResponse response) {
+            if (!this.ModelState.IsValid) {
+                return this.BadRequest(this.ModelState);
+            }
+
+            TodoItem todoItem = this._todoItemRepository.GetById(id);
+            if (todoItem == null) {
+                return this.NotFound();
+            }
+
+            this._mapper.Map(response, todoItem);
+            this._todoItemRepository.SaveChanges();
+
+            return this.CreatedAtRoute("GetTodoItem", new { id = todoItem.Id }, this._mapper.Map<TodoItemResponse>(todoItem));
         }
     }
 }

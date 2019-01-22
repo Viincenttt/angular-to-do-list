@@ -5,7 +5,7 @@ namespace TodoList.Api.Data.Repositories {
     public interface IRepository<T> where T : class {
         void Add(T entity);
         void Delete(T entity);
-        Task<bool> SaveAll();
+        Task<bool> SaveChanges();
         IQueryable<T> GetAll();
         T GetById(int id);
     }
@@ -33,7 +33,7 @@ namespace TodoList.Api.Data.Repositories {
             this._dbContext.Remove(entity);
         }
 
-        public async Task<bool> SaveAll() {
+        public async Task<bool> SaveChanges() {
             return await this._dbContext.SaveChangesAsync() > 0;
         }
     }

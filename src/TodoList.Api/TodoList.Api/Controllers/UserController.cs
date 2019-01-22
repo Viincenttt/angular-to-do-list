@@ -3,11 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using TodoList.Api.Data.Dtos;
 using TodoList.Api.Data.Dtos.Request;
 using TodoList.Api.Data.Dtos.Response;
 using TodoList.Api.Framework.Extensions;
-using TodoList.Api.Services;
 using IAuthorizationService = TodoList.Api.Services.IAuthorizationService;
 
 namespace TodoList.Api.Controllers {
