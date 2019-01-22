@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using TodoList.Api.Data.Models;
 
 namespace TodoList.Api.Data {
-    public class ApplicationDbContext : DbContext {
-
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
+        public DbSet<ApplicationUser> Values { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
     }
