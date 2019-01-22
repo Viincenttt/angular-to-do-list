@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TodoList.Api.Data.Dtos {
-    public class UserRegistrationModel {
+namespace TodoList.Api.Data.Dtos.Request {
+    public class UserRegistrationRequestModel {
         [Required]
         public string FirstName { get; set; }
 

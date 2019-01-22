@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TodoList.Api.Data;
 using TodoList.Api.Data.Models;
 using TodoList.Api.Data.Repositories;
+using TodoList.Api.Framework.Middleware;
 using TodoList.Api.Services;
 
 namespace TodoList.Api {
@@ -23,13 +24,14 @@ namespace TodoList.Api {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddCors();
             services.AddDefaultIdentity<ApplicationUser>(x => {
-                    x.Password.RequireDigit = false;
-                    x.Password.RequireLowercase = false;
-                    x.Password.RequireNonAlphanumeric = false;
-                    x.Password.RequireUppercase = false;
-                    x.Password.RequiredLength = 8;
-                })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                x.Password.RequireDigit = false;
+                x.Password.RequireLowercase = false;
+                x.Password.RequireNonAlphanumeric = false;
+                x.Password.RequireUppercase = false;
+                x.Password.RequiredLength = 8;
+            })
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddJwtAuthentication(this.Configuration.GetSection("AppSettings:Token").Value);
 
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
             services.AddScoped<IAuthorizationService, AuthorizationService>();
