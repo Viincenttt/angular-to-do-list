@@ -4,7 +4,7 @@ using TodoList.Api.Data.Models;
 
 namespace TodoList.Api.Data {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
-        public DbSet<ApplicationUser> Values { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
     }
