@@ -1,10 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
 namespace TodoList.Api.Data.Repositories {
     public interface IRepository<T> where T : class {
         void Add(T entity);
         void Delete(T entity);
         Task<bool> SaveAll();
+        IQueryable<T> GetAll();
+        T GetById(int id);
     }
 
     public abstract class Repository<T> : IRepository<T> where T : class {
@@ -12,6 +15,14 @@ namespace TodoList.Api.Data.Repositories {
 
         protected Repository(ApplicationDbContext dbContext) {
             this._dbContext = dbContext;
+        }
+
+        public IQueryable<T> GetAll() {
+            return this._dbContext.Set<T>();
+        }
+
+        public T GetById(int id) {
+            return this._dbContext.Set<T>().Find(id);
         }
 
         public void Add(T entity) {

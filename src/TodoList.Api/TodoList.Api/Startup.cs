@@ -37,6 +37,7 @@ namespace TodoList.Api {
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
             services.AddScoped<ITodoItemRepository, TodoItemRepository>();
             services.AddScoped<IAuthorizationService, AuthorizationService>();
+            services.AddScoped<IUserIdProvider, UserIdProvider>();
 
             services.AddAutoMapper();
         }

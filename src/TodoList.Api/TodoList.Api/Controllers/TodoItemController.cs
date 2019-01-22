@@ -5,6 +5,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TodoList.Api.Data.Dtos.Response;
+using TodoList.Api.Data.Models;
 using TodoList.Api.Data.Repositories;
 using TodoList.Api.Framework.Extensions;
 
@@ -22,11 +23,23 @@ namespace TodoList.Api.Controllers {
 
         [HttpGet]
         public IActionResult GetAll() {
-            IList<TodoItemResponse> todoItems = this._todoItemRepository.GetByApplicationUser(this.GetUserId())
+            IList<TodoItemResponse> response = this._todoItemRepository.GetAll()
                 .ProjectTo<TodoItemResponse>(this._mapper.ConfigurationProvider)
                 .ToList();
 
-            return this.Ok(todoItems);
+            return this.Ok(response);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult Get(int id) {
+            TodoItem todoItem = this._todoItemRepository.GetById(id);
+            if (todoItem == null) {
+                return this.NotFound();
+            }
+
+            TodoItemResponse response = this._mapper.Map<TodoItemResponse>(todoItem);
+            return this.Ok(response);
         }
     }
 }
