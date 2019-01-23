@@ -12,6 +12,7 @@ using TodoList.Api.Framework.Extensions;
 namespace TodoList.Api.Controllers {
     [Route("api/todo")]
     [Authorize]
+    [ApiController]
     public class TodoItemController : ControllerBase {
         private readonly ITodoItemRepository _todoItemRepository;
         private readonly IMapper _mapper;
@@ -46,10 +47,6 @@ namespace TodoList.Api.Controllers {
         [HttpPost]
         [Route("")]
         public IActionResult Add([FromBody]TodoItemResponse response) {
-            if (!this.ModelState.IsValid) {
-                return this.BadRequest(this.ModelState);
-            }
-
             TodoItem todoItem = this._mapper.Map<TodoItem>(response);
             todoItem.ApplicationUserId = this.GetUserId();
 
@@ -62,10 +59,6 @@ namespace TodoList.Api.Controllers {
         [HttpPut]
         [Route("{id}")]
         public IActionResult Update(int id, [FromBody]TodoItemResponse response) {
-            if (!this.ModelState.IsValid) {
-                return this.BadRequest(this.ModelState);
-            }
-
             TodoItem todoItem = this._todoItemRepository.GetById(id);
             if (todoItem == null) {
                 return this.NotFound();
