@@ -200,8 +200,7 @@ namespace TodoList.Api.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<string>("SortOrder")
-                        .IsRequired();
+                    b.Property<int>("SortOrder");
 
                     b.Property<string>("Title")
                         .IsRequired();

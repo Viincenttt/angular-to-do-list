@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TodoList.Api.Migrations
 {
-    public partial class AddTodoItem : Migration
+    public partial class AddTodoItems : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,7 @@ namespace TodoList.Api.Migrations
                     ApplicationUserId = table.Column<string>(nullable: false),
                     Title = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false),
-                    SortOrder = table.Column<string>(nullable: false)
+                    SortOrder = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

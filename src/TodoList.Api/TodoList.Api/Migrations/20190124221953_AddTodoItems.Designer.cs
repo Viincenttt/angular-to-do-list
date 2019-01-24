@@ -10,8 +10,8 @@ using TodoList.Api.Data;
 namespace TodoList.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190122185143_AddTodoItem")]
-    partial class AddTodoItem
+    [Migration("20190124221953_AddTodoItems")]
+    partial class AddTodoItems
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -202,8 +202,7 @@ namespace TodoList.Api.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<string>("SortOrder")
-                        .IsRequired();
+                    b.Property<int>("SortOrder");
 
                     b.Property<string>("Title")
                         .IsRequired();

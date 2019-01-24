@@ -15,6 +15,6 @@ namespace TodoList.Api.Data.Models {
         [Required]
         public string Description { get; set; }
         [Required]
-        public string SortOrder { get; set; }
+        public int SortOrder { get; set; }
     }
 }

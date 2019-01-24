@@ -29,14 +29,14 @@ namespace TodoList.Tests.Data {
                     ApplicationUser = currentUser,
                     Title = "Create more integration tests",
                     Description = "But always have more unit tests",
-                    SortOrder = "0"            
+                    SortOrder = 0          
                 });
 
                 context.TodoItems.Add(new TodoItem() {
                     ApplicationUser = otherUser,
                     Title = "Bake cookies",
                     Description = "",
-                    SortOrder = "1"
+                    SortOrder = 1
                 });
 
                 context.SaveChanges();
