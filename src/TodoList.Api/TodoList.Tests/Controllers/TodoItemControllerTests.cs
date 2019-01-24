@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Threading.Tasks;
 using TodoList.Api.Controllers;
 using TodoList.Api.Data.Dtos.Response;
 using TodoList.Api.Data.Models;
@@ -38,28 +39,28 @@ namespace TodoList.Tests.Controllers {
         }
 
         [Fact]
-        public void Update_ShouldReturnNotFound_WhenTodoItemIsNull() {
+        public async Task Update_ShouldReturnNotFound_WhenTodoItemIsNull() {
             // Given
             var repositoryMock = this.GetTodoItemRepositoryMock(null);
             var mapperMock = new Mock<IMapper>();
             TodoItemController controller = new TodoItemController(repositoryMock, mapperMock.Object);
 
             // When
-            IActionResult result = controller.Update(1, new TodoItemResponse());
+            IActionResult result = await controller.Update(1, new TodoItemResponse());
 
             // Then
             Assert.IsType<NotFoundResult>(result);
         }
 
         [Fact]
-        public void Update_ShouldReturnCreated_WhenTodoItemIsFound() {
+        public async Task Update_ShouldReturnCreated_WhenTodoItemIsFound() {
             // Given
             var repositoryMock = this.GetTodoItemRepositoryMock(new TodoItem());
             var mapperMock = new Mock<IMapper>();
             TodoItemController controller = new TodoItemController(repositoryMock, mapperMock.Object);
 
             // When
-            IActionResult result = controller.Update(1, new TodoItemResponse());
+            IActionResult result = await controller.Update(1, new TodoItemResponse());
 
             // Then
             Assert.IsType<CreatedAtRouteResult>(result);
