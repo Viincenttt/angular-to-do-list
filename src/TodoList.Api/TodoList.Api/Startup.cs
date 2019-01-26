@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +35,11 @@ namespace TodoList.Api {
             services.AddJwtAuthentication(this.Configuration.GetSection("AppSettings:Token").Value);
 
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+            services.AddScoped<ITodoItemRepository, TodoItemRepository>();
             services.AddScoped<IAuthorizationService, AuthorizationService>();
+            services.AddScoped<IUserIdProvider, UserIdProvider>();
+
+            services.AddAutoMapper();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
