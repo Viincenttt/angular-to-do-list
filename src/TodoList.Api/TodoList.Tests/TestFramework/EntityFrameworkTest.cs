@@ -12,16 +12,12 @@ namespace TodoList.Tests.TestFramework {
         protected ApplicationDbContext DbContext { get; set; }
 
         public EntityFrameworkTest() {
-            this.Initialize();
+            this.SetupApplicationDbContext();
+            this.SeedCurrentUser();
         }
 
         public void Dispose() {
             this.DbContext.Dispose();
-        }
-
-        private void Initialize() {
-            this.SetupApplicationDbContext();
-            this.SeedCurrentUser();
         }
 
         private void SetupApplicationDbContext() {
