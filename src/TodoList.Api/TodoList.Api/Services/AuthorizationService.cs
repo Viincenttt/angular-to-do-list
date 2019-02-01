@@ -44,12 +44,13 @@ namespace TodoList.Api.Services {
                 };
             }
 
-            ApplicationUser user = await this._userManager.FindByNameAsync(loginRequest.Username);
+            ApplicationUser user = await this._userManager.FindByNameAsync(loginRequest.Email);
             string token = this.GenerateToken(user);
 
             return new UserLoginResponseModel() {
                 Succeeded = true,
-                Token = token
+                Token = token,
+                Email = loginRequest.Email
             };
         }
 
@@ -71,7 +72,7 @@ namespace TodoList.Api.Services {
         }
 
         private async Task<bool> AreCredentialsValid(UserLoginRequestModel loginRequest) {
-            ApplicationUser applicationUser = await this._userManager.FindByNameAsync(loginRequest.Username);
+            ApplicationUser applicationUser = await this._userManager.FindByNameAsync(loginRequest.Email);
 
             return await this._userManager.CheckPasswordAsync(applicationUser, loginRequest.Password);
         }

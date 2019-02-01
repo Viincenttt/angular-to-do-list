@@ -7,19 +7,7 @@
         <a class="nav-link" href="#">Home</a>
       </li>
     </ul>
-    <form class="form-inline" [formGroup]="loginForm" (ngSubmit)="onLogin()">
-      <input 
-        class="form-control mr-sm-2" 
-        type="text" 
-        placeholder="E-mail"
-        formControlName="email">
-      <input 
-        class="form-control mr-sm-2" 
-        type="password" 
-        placeholder="Password"
-        formControlName="password">
-
-      <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Login</button>
-    </form>
+    
+    <app-login></app-login>
   </div>
 </nav>
