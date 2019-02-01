@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
   public currentUser: UserLoginResponse;
+  public displayLoginFailedMessage = false;
 
   constructor(private authService: AuthService) { }
 
@@ -32,14 +33,22 @@ export class LoginComponent implements OnInit {
   }
 
   public onLogin(): void {
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.displayLoginFailedMessage = false;
+
     this.authService.login(this.loginForm.value.email, this.loginForm.value.password)
       .pipe(first())
       .subscribe(
         data => {
-          console.log('success');
+          console.log('Successfull login');
         },
         error => {
-          console.log(error);
+          if (error.status === 400) {
+            this.displayLoginFailedMessage = true;
+          }
         }
       );
   }
