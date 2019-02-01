@@ -13,4 +13,7 @@
   <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Login</button>
 </form>
 
-<span *ngIf="currentUser" class="navbar-brand">Welcome {{ currentUser.email }}</span>
+<div *ngIf="currentUser">
+    <span class="navbar-brand">Welcome {{ currentUser.email }}</span>
+    <button class="btn btn-outline-light my-2 my-sm-0" type="button" (click)="onLogout()">Logout</button>
+</div>

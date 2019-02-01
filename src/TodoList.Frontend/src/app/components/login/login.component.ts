@@ -43,4 +43,8 @@ export class LoginComponent implements OnInit {
         }
       );
   }
+
+  public onLogout(): void {
+    this.authService.logout();
+  }
 }
