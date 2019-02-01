@@ -10,10 +10,10 @@
     placeholder="Password"
     formControlName="password">
 
-  <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Login</button>
+  <button class="btn btn-outline-light my-2 my-sm-0" type="submit" [disabled]="loginForm.invalid">Login</button>
 </form>
 
 <div *ngIf="currentUser">
-    <span class="navbar-brand">Welcome {{ currentUser.email }}</span>
-    <button class="btn btn-outline-light my-2 my-sm-0" type="button" (click)="onLogout()">Logout</button>
+    <span class="navbar-text mr-3">Welcome {{ currentUser.email }}</span>
+    <button class="btn btn-outline-light" type="button" (click)="onLogout()">Logout</button>
 </div>
