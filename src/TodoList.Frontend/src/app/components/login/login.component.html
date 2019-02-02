@@ -13,6 +13,7 @@
     formControlName="password">
 
   <button class="btn btn-outline-light my-2 my-sm-0" type="submit" [disabled]="loginForm.invalid">Login</button>  
+  <a routerLink="/register" class="btn btn-outline-light ml-sm-2">Register</a>
 </form>
 
 <div *ngIf="currentUser">
