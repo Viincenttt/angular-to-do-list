@@ -12,6 +12,8 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { RegistrationService } from './services/registration.service';
 import { HomeComponent } from './components/home/home.component';
+import { TodoOverviewComponent } from './components/todo/todo-overview/todo-overview.component';
+import { AuthGuard } from './services/authentication/auth.guard';
 
 
 @NgModule({
@@ -20,7 +22,8 @@ import { HomeComponent } from './components/home/home.component';
     HeaderComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    TodoOverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,8 @@ import { HomeComponent } from './components/home/home.component';
   ],
   providers: [
     AuthService,
-    RegistrationService
+    RegistrationService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

@@ -16,6 +16,10 @@ export class AuthService {
         this.currentUser = this.currentUserSubject.asObservable();
     }
 
+    public get currentUserValue(): UserLoginResponse {
+        return this.currentUserSubject.value;
+    }
+
     public login(email: string, password: string) {
         const userLoginRequest = new UserLoginRequest(email, password);
 

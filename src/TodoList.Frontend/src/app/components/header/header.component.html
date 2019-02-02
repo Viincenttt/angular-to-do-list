@@ -3,8 +3,11 @@
 
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/home">Home</a>
+      </li>
+      <li *ngIf="isAuthenticated" routerLinkActive="active">
+        <a class="nav-link" routerLink="/todo">Todo items</a>
       </li>
     </ul>
     
