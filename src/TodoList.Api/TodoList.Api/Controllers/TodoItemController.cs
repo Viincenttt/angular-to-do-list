@@ -5,7 +5,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TodoList.Api.Data.Dtos.Response;
+using TodoList.Api.Data.Dtos;
 using TodoList.Api.Data.Models;
 using TodoList.Api.Data.Repositories;
 using TodoList.Api.Framework.Extensions;
@@ -26,8 +26,8 @@ namespace TodoList.Api.Controllers {
         [HttpGet]
         [Route("")]
         public IActionResult GetAll() {
-            IList<TodoItemResponse> response = this._todoItemRepository.GetAll()
-                .ProjectTo<TodoItemResponse>(this._mapper.ConfigurationProvider)
+            IList<TodoItemDto> response = this._todoItemRepository.GetAll()
+                .ProjectTo<TodoItemDto>(this._mapper.ConfigurationProvider)
                 .ToList();
 
             return this.Ok(response);
@@ -41,13 +41,13 @@ namespace TodoList.Api.Controllers {
                 return this.NotFound();
             }
 
-            TodoItemResponse response = this._mapper.Map<TodoItemResponse>(todoItem);
+            TodoItemDto response = this._mapper.Map<TodoItemDto>(todoItem);
             return this.Ok(response);
         }
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> Add([FromBody]TodoItemResponse response) {
+        public async Task<IActionResult> Add([FromBody]TodoItemDto response) {
             TodoItem todoItem = this._mapper.Map<TodoItem>(response);
             todoItem.ApplicationUserId = this.GetUserId();
             todoItem.SortOrder = this._todoItemRepository.GetNextSortOrder();
@@ -55,12 +55,12 @@ namespace TodoList.Api.Controllers {
             this._todoItemRepository.Add(todoItem);
             await this._todoItemRepository.SaveChangesAsync();
 
-            return this.CreatedAtRoute("GetTodoItem", new { id = todoItem.Id }, this._mapper.Map<TodoItemResponse>(todoItem));
+            return this.CreatedAtRoute("GetTodoItem", new { id = todoItem.Id }, this._mapper.Map<TodoItemDto>(todoItem));
         }
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody]TodoItemResponse response) {
+        public async Task<IActionResult> Update(int id, [FromBody]TodoItemDto response) {
             TodoItem todoItem = this._todoItemRepository.GetById(id);
             if (todoItem == null) {
                 return this.NotFound();
@@ -69,7 +69,7 @@ namespace TodoList.Api.Controllers {
             this._mapper.Map(response, todoItem);
             await this._todoItemRepository.SaveChangesAsync();
 
-            return this.CreatedAtRoute("GetTodoItem", new { id = todoItem.Id }, this._mapper.Map<TodoItemResponse>(todoItem));
+            return this.CreatedAtRoute("GetTodoItem", new { id = todoItem.Id }, this._mapper.Map<TodoItemDto>(todoItem));
         }
     }
 }

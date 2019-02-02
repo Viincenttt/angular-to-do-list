@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +14,8 @@ import { RegistrationService } from './services/registration.service';
 import { HomeComponent } from './components/home/home.component';
 import { TodoOverviewComponent } from './components/todo/todo-overview/todo-overview.component';
 import { AuthGuard } from './services/authentication/auth.guard';
+import { TodoListService } from './services/todolist.service';
+import { JwtInterceptor } from './services/authentication/jwt.interceptor';
 
 
 @NgModule({
@@ -34,8 +36,10 @@ import { AuthGuard } from './services/authentication/auth.guard';
     ReactiveFormsModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     AuthService,
     RegistrationService,
+    TodoListService,
     AuthGuard
   ],
   bootstrap: [AppComponent]

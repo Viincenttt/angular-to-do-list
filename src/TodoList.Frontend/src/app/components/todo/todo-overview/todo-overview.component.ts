@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TodoListService } from 'src/app/services/todolist.service';
+import { TodoItemModel } from 'src/app/models/todoitem.model';
 
 @Component({
   selector: 'app-todo-overview',
@@ -6,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./todo-overview.component.less']
 })
 export class TodoOverviewComponent implements OnInit {
+  public todoItems: TodoItemModel[] = [];
 
-  constructor() { }
+  constructor(private todoListService: TodoListService) { }
 
   ngOnInit() {
+    this.todoListService.todoItems.subscribe((todoItems) => {
+      this.todoItems = todoItems;
+    });
   }
-
 }

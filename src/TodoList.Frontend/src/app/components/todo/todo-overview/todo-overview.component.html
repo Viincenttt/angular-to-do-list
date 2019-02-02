@@ -1,3 +1,19 @@
-<p>
-  todo-overview works!
-</p>
+<h1 class="display-4 my-3">Todo items</h1>
+
+<div class="row row-equal-height">
+    <div class="col-xl-4 col-md-6 col-sm-12 mb-4" *ngFor="let todoItem of todoItems">  
+        <div class="card">
+          <div class="card-header">
+              {{ todoItem.title }}
+          </div>
+          <div class="card-body">
+            <p class="card-text">{{ todoItem.description }}</p>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+<div *ngIf="todoItems.length !== 0" class="alert alert-info">
+  You haven't added any todo items yet.
+</div>

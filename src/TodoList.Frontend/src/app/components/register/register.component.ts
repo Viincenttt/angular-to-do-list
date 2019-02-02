@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { RegistrationService } from 'src/app/services/registration.service';
-import { RegistrationRequest } from 'src/app/models/registrationRequest';
+import { RegistrationRequestModel } from 'src/app/models/registrationRequest.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
 
     this.errors = [];
 
-    const registrationRequest = new RegistrationRequest();
+    const registrationRequest = new RegistrationRequestModel();
     registrationRequest.email = this.registrationForm.value.email;
     registrationRequest.firstName = this.registrationForm.value.firstName;
     registrationRequest.lastName = this.registrationForm.value.lastName;

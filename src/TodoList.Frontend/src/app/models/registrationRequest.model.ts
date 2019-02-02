@@ -1,4 +1,4 @@
-export class RegistrationRequest {
+export class RegistrationRequestModel {
     public firstName: string;
     public lastName: string;
     public email: string;

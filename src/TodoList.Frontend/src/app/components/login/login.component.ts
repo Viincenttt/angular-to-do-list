@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { first } from 'rxjs/operators';
-import { UserLoginResponse } from 'src/app/models/authentication/userloginresponse';
+import { UserLoginResponseModel } from 'src/app/models/authentication/userloginresponse.model';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +12,7 @@ import { UserLoginResponse } from 'src/app/models/authentication/userloginrespon
 export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
-  public currentUser: UserLoginResponse;
+  public currentUser: UserLoginResponseModel;
   public displayLoginFailedMessage = false;
 
   constructor(private authService: AuthService) { }

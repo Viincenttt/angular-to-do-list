@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TodoList.Api.Data.Dtos.Response {
-    public class TodoItemResponse {
+namespace TodoList.Api.Data.Dtos {
+    public class TodoItemDto {
         public int Id { get; set; }
 
         [Required]
@@ -11,6 +11,6 @@ namespace TodoList.Api.Data.Dtos.Response {
         public string Description { get; set; }
 
         [Required]
-        public string SortOrder { get; set; }
+        public int SortOrder { get; set; }
     }
 }

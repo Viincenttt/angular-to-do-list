@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/authentication/auth.service';
-import { UserLoginResponse } from 'src/app/models/authentication/userloginresponse';
+import { UserLoginResponseModel } from 'src/app/models/authentication/userloginresponse.model';
+
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,7 @@ export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    this.authService.currentUser.subscribe((user: UserLoginResponse) => {
+    this.authService.currentUser.subscribe((user: UserLoginResponseModel) => {
       this.isAuthenticated = user != null;
     });
   }
