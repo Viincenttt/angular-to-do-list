@@ -1,23 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TodoListService } from 'src/app/services/todolist.service';
 import { TodoItemModel } from 'src/app/models/todoitem.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TodoEditComponent } from '../todo-edit/todo-edit.component';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-todo-overview',
   templateUrl: './todo-overview.component.html',
   styleUrls: ['./todo-overview.component.less']
 })
-export class TodoOverviewComponent implements OnInit {
+export class TodoOverviewComponent implements OnInit, OnDestroy {
+  private todoItemsChanged: Subscription;
   public todoItems: TodoItemModel[] = [];
 
   constructor(private todoListService: TodoListService, private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.todoListService.todoItemsChanged.subscribe((todoItems) => {
+    this.todoItemsChanged = this.todoListService.todoItemsChanged.subscribe((todoItems) => {
       this.todoItems = todoItems;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.todoItemsChanged.unsubscribe();
   }
 
   public onEdit(id: number): void {
