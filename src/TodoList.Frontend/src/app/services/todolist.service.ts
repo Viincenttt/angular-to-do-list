@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TodoItemModel } from '../models/todoitem.model';
-import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TodoListService {
-    public todoItems = new Observable<TodoItemModel[]>();
+    public todoItemsChanged = new Subject<TodoItemModel[]>();
 
     constructor(private httpClient: HttpClient) {
-        this.todoItems = this.httpClient.get<TodoItemModel[]>(`${environment.apiUrl}/api/todo`);
+        this.httpClient.get<TodoItemModel[]>(`${environment.apiUrl}/api/todo`).subscribe((list) => {
+            this.todoItemsChanged.next(list);
+        });
     }
 }
