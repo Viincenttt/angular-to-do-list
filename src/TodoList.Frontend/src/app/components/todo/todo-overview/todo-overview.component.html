@@ -8,11 +8,11 @@
           </div>
           <div class="card-body">
             <p class="card-text">{{ todoItem.description }}</p>
+            <button class="btn btn-default" (click)="onEdit(todoItem.id)">Edit</button>
           </div>
         </div>
       </div>
 </div>
-
 
 <div *ngIf="todoItems.length === 0" class="alert alert-info">
   You haven't added any todo items yet.
