@@ -44,6 +44,8 @@ export class TodoEditComponent implements OnInit, OnDestroy {
       return;
     }
 
-    console.log(this.editForm.value);
+    this.todoListService.save(this.editItem).subscribe(() => {
+      this.editForm.reset();
+    });
   }
 }
