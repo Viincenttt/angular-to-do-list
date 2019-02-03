@@ -17,6 +17,8 @@ import { AuthGuard } from './services/authentication/auth.guard';
 import { TodoListService } from './services/todolist.service';
 import { JwtInterceptor } from './services/authentication/jwt.interceptor';
 import { TodoEditComponent } from './components/todo/todo-edit/todo-edit.component';
+import { ErrorInterceptor } from './services/error.interceptor';
+import { ErrorComponent } from './components/error/error.component';
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { TodoEditComponent } from './components/todo/todo-edit/todo-edit.compone
     RegisterComponent,
     HomeComponent,
     TodoOverviewComponent,
-    TodoEditComponent
+    TodoEditComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -39,12 +42,13 @@ import { TodoEditComponent } from './components/todo/todo-edit/todo-edit.compone
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     AuthService,
     RegistrationService,
     TodoListService,
     AuthGuard
   ],
-  entryComponents: [TodoEditComponent],
+  entryComponents: [TodoEditComponent, ErrorComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
