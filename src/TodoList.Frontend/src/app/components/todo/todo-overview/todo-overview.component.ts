@@ -17,6 +17,8 @@ export class TodoOverviewComponent implements OnInit, OnDestroy {
   constructor(private todoListService: TodoListService, private modalService: NgbModal) { }
 
   ngOnInit() {
+    this.todoItems = this.todoListService.todoItems;
+
     this.todoItemsChanged = this.todoListService.todoItemsChanged.subscribe((todoItems) => {
       this.todoItems = todoItems;
     });

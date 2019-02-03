@@ -4,6 +4,7 @@ import { TodoItemModel } from '../models/todoitem.model';
 import { Subject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { tap } from 'rxjs/operators';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ import { tap } from 'rxjs/operators';
 export class TodoListService {
     public todoItemsChanged = new Subject<TodoItemModel[]>();
 
-    private todoItems: TodoItemModel[] = [];
+    public todoItems: TodoItemModel[] = [];
 
     constructor(private httpClient: HttpClient) {
         this.httpClient.get<TodoItemModel[]>(`${environment.apiUrl}/api/todo`).subscribe((list) => {
@@ -27,12 +28,12 @@ export class TodoListService {
     public save(todoItem: TodoItemModel): Observable<TodoItemModel> {
         const baseSaveUrl = `${environment.apiUrl}/api/todo`;
         if (todoItem.id) {
-            return this.httpClient.post<TodoItemModel>(`${baseSaveUrl}`, todoItem)
+            return this.httpClient.put<TodoItemModel>(`${baseSaveUrl}/${todoItem.id}`, todoItem)
                 .pipe(tap(t => {
-                    console.log('replace');
+                    todoItem = t;
                 }));
         } else {
-            return this.httpClient.put<TodoItemModel>(`${baseSaveUrl}/${todoItem.id}`, todoItem)
+            return this.httpClient.post<TodoItemModel>(`${baseSaveUrl}`, todoItem)
                 .pipe(tap(t => {
                     console.log('insert');
                 }));

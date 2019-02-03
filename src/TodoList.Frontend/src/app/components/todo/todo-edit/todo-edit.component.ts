@@ -3,6 +3,7 @@ import { TodoListService } from 'src/app/services/todolist.service';
 import { BehaviorSubject } from 'rxjs';
 import { TodoItemModel } from 'src/app/models/todoitem.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-todo-edit',
@@ -14,7 +15,7 @@ export class TodoEditComponent implements OnInit, OnDestroy {
   public idToEdit = new BehaviorSubject<number>(null);
   public editItem: TodoItemModel;
 
-  constructor(private todoListService: TodoListService) { }
+  constructor(public activeModal: NgbActiveModal, private todoListService: TodoListService) { }
 
   ngOnInit() {
     this.initEditForm();
@@ -44,8 +45,12 @@ export class TodoEditComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.editItem.title = this.editForm.value.title;
+    this.editItem.description = this.editForm.value.description;
+
     this.todoListService.save(this.editItem).subscribe(() => {
       this.editForm.reset();
+      this.activeModal.close();
     });
   }
 }
