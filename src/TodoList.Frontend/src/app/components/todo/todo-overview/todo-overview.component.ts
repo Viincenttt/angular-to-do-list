@@ -33,4 +33,10 @@ export class TodoOverviewComponent implements OnInit, OnDestroy {
     const component = <TodoEditComponent>modalRef.componentInstance;
     component.idToEdit.next(id);
   }
+
+  public onAdd(): void {
+    const modalRef = this.modalService.open(TodoEditComponent);
+    const component = <TodoEditComponent>modalRef.componentInstance;
+    component.idToEdit.next(null);
+  }
 }

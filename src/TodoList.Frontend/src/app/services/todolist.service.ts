@@ -4,7 +4,6 @@ import { TodoItemModel } from '../models/todoitem.model';
 import { Subject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { tap } from 'rxjs/operators';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable({
     providedIn: 'root'
@@ -29,13 +28,13 @@ export class TodoListService {
         const baseSaveUrl = `${environment.apiUrl}/api/todo`;
         if (todoItem.id) {
             return this.httpClient.put<TodoItemModel>(`${baseSaveUrl}/${todoItem.id}`, todoItem)
-                .pipe(tap(t => {
-                    todoItem = t;
+                .pipe(tap(updatedTodoItem => {
+                    todoItem = updatedTodoItem;
                 }));
         } else {
             return this.httpClient.post<TodoItemModel>(`${baseSaveUrl}`, todoItem)
-                .pipe(tap(t => {
-                    console.log('insert');
+                .pipe(tap(insertedTodoItem => {
+                    this.todoItems.push(insertedTodoItem);
                 }));
         }
     }

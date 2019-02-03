@@ -1,5 +1,7 @@
 <h1 class="display-4 my-3">Todo items</h1>
 
+<button class="btn btn-primary" (click)="onAdd()">Add new</button>
+
 <div class="row row-equal-height">
     <div class="col-xl-4 col-md-6 col-sm-12 mb-4" *ngFor="let todoItem of todoItems">  
         <div class="card">

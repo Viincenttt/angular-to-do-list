@@ -21,11 +21,16 @@ export class TodoEditComponent implements OnInit, OnDestroy {
     this.initEditForm();
 
     this.idToEdit.subscribe((id: number) => {
-      this.editItem = this.todoListService.get(id);
-      this.editForm.setValue({
-        'title': this.editItem.title,
-        'description': this.editItem.description
-      });
+      if (id) {
+        this.editItem = this.todoListService.get(id);
+        this.editForm.setValue({
+          'title': this.editItem.title,
+          'description': this.editItem.description
+        });
+      } else {
+        this.editItem = new TodoItemModel();
+        this.editForm.reset();
+      }
     });
   }
 
