@@ -23,7 +23,9 @@ namespace TodoList.Api {
             services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"), 
                 o => o.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.GetName().Name)));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddCors();
+            services.AddCors(o => o.AddPolicy("AllowAll", builder => {
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            }));
             services.AddDefaultIdentity<ApplicationUser>(x => {
                 x.Password.RequireDigit = false;
                 x.Password.RequireLowercase = false;
@@ -50,7 +52,7 @@ namespace TodoList.Api {
                 app.UseHsts();
             }
 
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors("AllowAll");
             app.UseAuthentication();
             app.UseMvc();
         }
