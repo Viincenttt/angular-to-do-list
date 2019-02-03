@@ -19,7 +19,7 @@ export class TodoListService {
             this.todoItemsChanged.next(list);
         });
     }
-    // TODO: Not happy about the naming here... implies retrieving from server
+
     public get(id: number): TodoItemModel {
         return this.todoItems.find(x => x.id === id);
     }

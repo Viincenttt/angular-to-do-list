@@ -3,7 +3,7 @@ import { TodoListService } from 'src/app/services/todolist.service';
 import { TodoItemModel } from 'src/app/models/todoitem.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TodoEditComponent } from '../todo-edit/todo-edit.component';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-todo-overview',
@@ -28,15 +28,17 @@ export class TodoOverviewComponent implements OnInit, OnDestroy {
     this.todoItemsChanged.unsubscribe();
   }
 
-  public onEdit(id: number): void {
-    const modalRef = this.modalService.open(TodoEditComponent);
-    const component = <TodoEditComponent>modalRef.componentInstance;
-    component.idToEdit.next(id);
+  public onEdit(todoItemId: number): void {
+    this.openEditPopup(todoItemId);
   }
 
   public onAdd(): void {
+    this.openEditPopup(null);
+  }
+
+  private openEditPopup(todoItemId: number) {
     const modalRef = this.modalService.open(TodoEditComponent);
     const component = <TodoEditComponent>modalRef.componentInstance;
-    component.idToEdit.next(null);
+    component.idToEdit.next(todoItemId);
   }
 }
