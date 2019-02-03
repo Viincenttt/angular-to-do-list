@@ -66,6 +66,34 @@ namespace TodoList.Tests.Controllers {
             Assert.IsType<CreatedAtRouteResult>(result);
         }
 
+        [Fact] 
+        public async Task Delete_ShouldReturnNotFound_WhenTodoItemDoesNotExist() {
+            // Given
+            var repositoryMock = this.GetTodoItemRepositoryMock(null);
+            var mapperMock = new Mock<IMapper>();
+            TodoItemController controller = new TodoItemController(repositoryMock, mapperMock.Object);
+
+            // When
+            IActionResult result = await controller.Delete(1);
+
+            // Then
+            Assert.IsType<NotFoundResult>(result);
+        }
+
+        [Fact]
+        public async Task Delete_ShouldReturnOk_WhenTodoItemExists() {
+            // Given
+            var repositoryMock = this.GetTodoItemRepositoryMock(new TodoItem());
+            var mapperMock = new Mock<IMapper>();
+            TodoItemController controller = new TodoItemController(repositoryMock, mapperMock.Object);
+
+            // When
+            IActionResult result = await controller.Delete(1);
+
+            // Then
+            Assert.IsType<OkResult>(result);
+        }
+
         private ITodoItemRepository GetTodoItemRepositoryMock(TodoItem getByIdResult) {
             var repositoryMock = new Mock<ITodoItemRepository>();
             repositoryMock.Setup(x => x.GetById(It.IsAny<int>())).Returns(getByIdResult);

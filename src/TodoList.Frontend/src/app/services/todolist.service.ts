@@ -20,8 +20,8 @@ export class TodoListService {
         });
     }
 
-    public get(id: number): TodoItemModel {
-        return this.todoItems.find(x => x.id === id);
+    public get(todoItemId: number): TodoItemModel {
+        return this.todoItems.find(x => x.id === todoItemId);
     }
 
     public save(todoItem: TodoItemModel): Observable<TodoItemModel> {
@@ -37,5 +37,12 @@ export class TodoListService {
                     this.todoItems.push(insertedTodoItem);
                 }));
         }
+    }
+
+    public delete(todoItemId: number) {
+        return this.httpClient.delete<TodoItemModel[]>(`${environment.apiUrl}/api/todo/${todoItemId}`).subscribe((list) => {
+            const todoItemToRemove = this.get(todoItemId);
+            this.todoItems.splice(this.todoItems.indexOf(todoItemToRemove), 1);
+        });
     }
 }

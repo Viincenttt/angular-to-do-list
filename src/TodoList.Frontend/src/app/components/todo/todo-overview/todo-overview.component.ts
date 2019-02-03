@@ -36,6 +36,10 @@ export class TodoOverviewComponent implements OnInit, OnDestroy {
     this.openEditPopup(null);
   }
 
+  public onDelete(todoItemId: number): void {
+    this.todoListService.delete(todoItemId);
+  }
+
   private openEditPopup(todoItemId: number) {
     const modalRef = this.modalService.open(TodoEditComponent);
     const component = <TodoEditComponent>modalRef.componentInstance;

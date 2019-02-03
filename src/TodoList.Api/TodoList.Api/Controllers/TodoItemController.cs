@@ -71,5 +71,19 @@ namespace TodoList.Api.Controllers {
 
             return this.CreatedAtRoute("GetTodoItem", new { id = todoItem.Id }, this._mapper.Map<TodoItemDto>(todoItem));
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete(int id) {
+            TodoItem todoItem = this._todoItemRepository.GetById(id);
+            if (todoItem == null) {
+                return this.NotFound();
+            }
+
+            this._todoItemRepository.Delete(todoItem);
+            await this._todoItemRepository.SaveChangesAsync();
+
+            return this.Ok();
+        }
     }
 }
